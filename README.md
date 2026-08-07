@@ -1,44 +1,40 @@
-# Himanshu Kumar — Video Editor & Visual Creator Portfolio
+# Prateek Yadav — Full-Stack MERN Stack Developer & Programmer Portfolio
 
-A premium, cinematic, responsive web portfolio built for **Himanshu Kumar**, a professional Video Editor and Visual Creator based in Noida, India. Designed with rich glassmorphism aesthetics, dynamic video marquees, 3D fanned card stacks, client stories, and smooth animations.
+A premium, modern, responsive web portfolio built for **Prateek Yadav**, a Full-Stack MERN Stack Developer and Programmer. Designed with glassmorphism aesthetics, dynamic interactive showcases, technical expertise categories, project highlights, client stories, and touch-swipe mobile carousels.
 
 ---
 
 ## 🌟 Features & Highlights
 
-- **Cinematic Dark Theme Aesthetics**: Features dark crimson & ambient glow lighting orbs matching portfolio branding.
-- **Hero & Headline Section**: Bold typographic headline, live availability badge, experience stats, and hero banner background.
-- **Visual Highlights Showcase Reel**: Built-in video showcase player for featured editor showreels.
-- **Infinite Auto-Scrolling Video Marquee Gallery**: Dual-set seamless loop showcasing short-form YouTube edits, Shorts, TikToks, and Reels.
-- **Long-Form Video Highlights Grid**: Dedicated grid layout featuring curated long-form YouTube videos and desk setup transformations.
-- **3D Fanned Services Stack**: Interactive 5-card stacked services breakdown (YouTube Editing, Short Form Content, Podcast Editing, Commercial Ads, Motion Graphics).
-- **Client Stories & Reviews Carousel**: Dynamic testimonial slider featuring verified client reviews with client avatars and star ratings.
-- **Get In Touch & Contact Form**: Functional contact section integrated with EmailJS for direct inquiry handling.
-- **Restricted Access Landing Page (`access-denied.html`)**: Interactive redirect page with video playback (`assets/208372_medium.mp4`) connected to social icons.
+- **Modern Glassmorphism Aesthetics**: Premium dark-mode theme with ambient glow orbs and responsive layout architecture.
+- **Hero & Headline Section**: Bold typographic intro, live availability status, experience stats, and quick CTA buttons.
+- **Showcase Slideshow Reel**: Interactive showcase slider for featured project walkthroughs.
+- **Technical Expertise Section**: Styled skill cards featuring brand-colored tech icons (React, Node.js, Express, MongoDB, JavaScript, HTML5, CSS3, Tailwind, C/C++, Git/GitHub).
+- **Featured Projects Section**: Full-stack project cards (ElectricHelp, FundHappiness, ImagineX, Portfolio) with live demo buttons.
+- **Mobile-Optimized Touch Carousel**: Featured projects automatically convert into a touch-swipeable horizontal slide carousel with dot indicators on mobile devices (`<= 768px`).
+- **Client Stories & Testimonials**: Dynamic testimonial slider featuring verified client reviews with client avatars and star ratings.
+- **Functional Contact Form**: Direct email sending to `prateek82250@gmail.com` via FormSubmit API with EmailJS and mailto fallbacks.
+- **Netlify & Vercel Ready**: Pre-configured with `netlify.toml` and `_redirects` for instant 1-click cloud deployment.
 
 ---
 
 ## 📁 Folder & File Structure
 
 ```text
-Narendra Portfolio/
+Prateek Portfolio/
 ├── assets/                                  # Media Assets Directory
-│   ├── 208372_medium.mp4                    # Access Denied background video
-│   ├── 42890-432450896_medium.mp4           # Showcase reel video
-│   ├── Himanshu's Landing page.png          # Hero background banner
-│   ├── Himanshu_Front.png                   # About Me portrait image
-│   ├── ai inspector 2.JPG.jpeg              # Client Review Avatar (Rachit Singh)
-│   ├── Screenshot 2026-08-04 215513.png     # Client Review Avatar (Elias Antonio Marcella)
-│   ├── Screenshot 2026-08-04 215719.png     # Client Review Avatar (Lim Siew Lan)
-│   ├── YouTube.jpg                          # Services Card Preview
-│   ├── What are the Current Short Form...jpg # Services Card Preview
-│   ├── Podcast.jpg                          # Services Card Preview
-│   ├── download (1).jpg                     # Services Card Preview
-│   └── Motion designer software...jpg       # Services Card Preview
+│   ├── showcase-electrichelp.png            # ElectricHelp Project Preview
+│   ├── showcase-fundhappiness.png           # FundHappiness Project Preview
+│   ├── showcase-imaginex.png                # ImagineX Project Preview
+│   ├── showcase-hero.png                    # Portfolio Hero Preview
+│   ├── himanshu-landing-page.png            # Hero background banner
+│   └── himanshu-front.png                   # About Me portrait image
 ├── index.html                               # Main Portfolio Homepage
 ├── styles.css                               # Main CSS Stylesheet & Design System
-├── script.js                                # Interactive JavaScript Logic & Marquee Setup
-├── access-denied.html                       # Custom Restricted Access Landing Page
+├── script.js                                # Interactive JavaScript Logic & Mobile Sliders
+├── netlify.toml                             # Netlify Deployment Configuration
+├── _redirects                               # Netlify Clean Routing Rules
+├── vercel.json                              # Vercel Deployment Configuration
 └── README.md                                # Project Documentation
 ```
 
@@ -46,12 +42,12 @@ Narendra Portfolio/
 
 ## 🛠️ Technologies Used
 
-- **HTML5**: Semantic markup, embedded YouTube IFrames, native `<video>` elements.
-- **CSS3**: Custom CSS variables, flexbox, CSS Grid, glassmorphism, 3D CSS transforms, `@keyframes` animations.
-- **JavaScript (ES6+)**: Vanilla JS for navigation toggles, carousel slider, counter animations, and infinite marquee logic.
-- **FontAwesome 6.5.2**: Scalable vector icons for social media and UI elements.
+- **HTML5**: Semantic markup, accessible structures, responsive media embedding.
+- **CSS3**: Custom CSS variables, Flexbox, CSS Grid, glassmorphism filters, scroll-snap sliders, `@keyframes` animations.
+- **JavaScript (ES6+)**: Vanilla JS for navigation toggles, carousel slider, touch event handlers, and form submission APIs.
+- **FontAwesome 6.5.2**: Vector icons for technology brands and UI elements.
 - **Google Fonts**: *Poppins* font family.
-- **EmailJS SDK v4**: Contact form submission handling.
+- **FormSubmit & EmailJS SDK**: Direct contact form email handling to `prateek82250@gmail.com`.
 
 ---
 
@@ -59,12 +55,11 @@ Narendra Portfolio/
 
 ### Using Python HTTP Server
 
-1. Open a terminal / command prompt in the project root directory (`Narendra Portfolio`).
-2. Run the local development server:
+1. Open a terminal in the project root directory:
    ```bash
    python -m http.server 8000
    ```
-3. Open your browser and navigate to:
+2. Open your browser and navigate to:
    ```text
    http://localhost:8000
    ```
@@ -76,6 +71,21 @@ Narendra Portfolio/
 
 ---
 
+## 🌐 Netlify Deployment
+
+This project is pre-configured for Netlify deployment:
+- **Publish Directory**: `.`
+- **Config File**: `netlify.toml` & `_redirects`
+
+To push updates:
+```bash
+git add .
+git commit -m "Update portfolio"
+git push
+```
+
+---
+
 ## 📄 License & Attribution
 
-© 2026 **Himanshu Kumar**. All rights reserved. Designed & developed for professional video editing and visual creation showcases.
+© 2026 **Prateek Yadav**. All rights reserved. Designed & developed for professional web development and software engineering showcases.
