@@ -17,20 +17,48 @@
     <link rel="stylesheet" href="styles.css?v=2.0">
 </head>
 
-<body>
+<body class="is-loading">
+
+    <!-- Fullscreen Tagda Preloader Screen -->
+    <div id="cinematic-loader" class="cinematic-loader">
+        <div class="loader-curtain loader-curtain-top"></div>
+        <div class="loader-curtain loader-curtain-bottom"></div>
+        
+        <div class="loader-content">
+            <div class="loader-logo-ring">
+                <svg class="loader-svg" viewBox="0 0 100 100">
+                    <circle class="loader-bg-circle" cx="50" cy="50" r="44"></circle>
+                    <circle class="loader-progress-circle" id="loader-progress-circle" cx="50" cy="50" r="44"></circle>
+                </svg>
+                <div class="loader-monogram">PY</div>
+            </div>
+            <div class="loader-percentage" id="loader-percent">0%</div>
+            <div class="loader-status" id="loader-status">INITIALIZING SYSTEM...</div>
+            <div class="loader-line-bar">
+                <div class="loader-line-fill" id="loader-line-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Background Particle Canvas -->
+    <canvas id="ambient-canvas"></canvas>
+
+    <!-- Custom Neon Follower Cursor -->
+    <div class="custom-cursor-dot" id="cursor-dot"></div>
+    <div class="custom-cursor-ring" id="cursor-ring"></div>
 
     <!-- Header / Navigation -->
     <header class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-left-group">
-                <a href="#hero" class="logo">
+                <a href="#hero" class="logo" data-magnetic>
                     <span class="logo-text">Prateek Yadav &nbsp Portfolio</span>
                     <span class="logo-dots">
                         <span class="dot orange"></span>
                         <span class="dot cyan"></span>
                     </span>
                 </a>
-                <a href="tel:+918225095020" class="nav-phone">
+                <a href="tel:+918225095020" class="nav-phone" data-magnetic>
                     <i class="fa-solid fa-phone"></i>
                     <span>+91 8225095020</span>
                 </a>
@@ -41,8 +69,8 @@
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </nav>
-            <a href="#contact" class="btn-hire-me">Hire Me</a>
-            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu">
+            <a href="#contact" class="btn-hire-me" data-magnetic>Hire Me</a>
+            <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Menu" data-magnetic>
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
@@ -62,37 +90,42 @@
             <div class="hero-overlay-bottom"></div>
             <div class="hero-ambient-red"></div>
             <div class="hero-ambient-crimson"></div>
+
+            
         </div>
+        
         
 
         <div class="hero-content container">
-            <div class="hero-badge">
+            <div class="hero-badge" data-reveal="fade-down">
                 <span class="badge-dot"></span>
-                Available for New Projects
-            </div>
-            <h1 class="hero-headline-big">
+                Available for New Projects 
+            </div> 
+            <h1 class="hero-headline-big" data-reveal="fade-up">
                 <span class="text-sand">I DON'T JUST</span><br>
-                <span class="text-sand">Develop </span><span class="text-black">Software</span><br>
+                <span class="text-sand">Develop </span><span class="text-black typewriter-target" data-typewriter='["Software.", "MERN Apps.", "Web Solutions.", "Experiences."]'>Software.</span><br>
                 <span class="text-sand">I CREATE</span><br>
-                <span class="text-black">EXPERIENCES.</span>
+                <span class="text-black glowing-text-accent">EXPERIENCES.</span>
             </h1>
-            <p class="hero-description-cinematic">
+            <p class="hero-description-cinematic" data-reveal="fade-up" data-delay="100">
                 I transform imagination into software with coding that captivate audiences, grow brands, and leave a
                 lasting impression — Bit  by Bit.
             </p>
 
-            <div class="hero-actions">
-                <a href="#projects" class="btn btn-primary">
+            <div class="hero-actions" data-reveal="fade-up" data-delay="200">
+                <a href="#projects" class="btn btn-primary" data-magnetic>
                     <span>View Projects</span>
                     <i class="fa-solid fa-arrow-right"></i>
                 </a>
-                <a href="#contact" class="btn btn-secondary">
+                <a href="#contact" class="btn btn-secondary" data-magnetic>
                     <span>Contact Me</span>
-                </a>              <a target="_blank" href="https://drive.google.com/file/d/1pZ5GTEIZ9UFuw4XjieL7aiirrdy3fxpk/view?usp=sharing" class="btn btn-secondary">VIEW RESUME</a>
+                </a>              <a target="_blank" href="https://drive.google.com/file/d/1pZ5GTEIZ9UFuw4XjieL7aiirrdy3fxpk/view?usp=sharing" class="btn btn-secondary" data-magnetic>VIEW RESUME</a>
+                
 
             </div>
+            
 
-            <div class="hero-stats">
+            <div class="hero-stats" data-reveal="fade-up" data-delay="300" data-tilt>
                 <div class="stat-item">
                     <span class="stat-number" data-target="2">2+</span>
                     <span class="stat-label">Years Experience</span>
@@ -117,23 +150,21 @@
         <!-- Background Glow Orbs matching photo theme -->
         <div class="glow-orb orange-glow orb-1"></div>
         <div class="glow-orb cyan-glow orb-2"></div>
-        <div class="glow-orb orange-glow orb-3"></div>
-
-        <!-- About Section -->
+        <div class="glow-orb orange-glow orb-3"></div>        <!-- About Section -->
         <section class="section about-section" id="about">
             <div class="about-bg-title-wrapper">
                 <span class="about-bg-title">ABOUT ME</span>
             </div>
             <div class="container about-container-new">
-                <div class="about-image-col">
-                    <div class="about-image-card">
+                <div class="about-image-col" data-reveal="fade-right">
+                    <div class="about-image-card" data-tilt>
                         <img src="./assets/himanshu-front.png" alt="Prateek Yadav" class="about-portrait-img">
                     </div>
                 </div>
-                <div class="about-text-col">
+                <div class="about-text-col" data-reveal="fade-left">
                     <h2 class="about-headline">
                         <span class="text-sand">Crafting Tech</span><br>
-                        <span class="text-black">Bit By Bit</span>
+                        <span class="text-black glowing-text-accent">Bit By Bit</span>
                     </h2>
                     <p class="about-text-p">
                         I'm Prateek Yadav, a freelance Web developer based in Satna, India. I've spent more than 2 years
@@ -153,7 +184,7 @@
                 <span class="skills-bg-title">MY SKILLS</span>
             </div>
             <div class="container">
-                <div class="section-header text-center">
+                <div class="section-header text-center" data-reveal="fade-down">
                     <h2 class="section-title">
                         <span class="text-sand">Professional</span> 
                         <span class="text-black">Skills</span>
@@ -165,7 +196,7 @@
 
                 <div class="skills-container-grid">
                     <!-- Left Column: Technical Expertise Progress Bars -->
-                    <div class="skills-categories glass-card">
+                    <div class="skills-categories glass-card" data-reveal="fade-right" data-tilt>
                         <h3 class="skills-category-title"><i class="fa-solid fa-code text-orange"></i> Technical Expertise</h3>
                         
                         <div class="skills-expertise-grid">
@@ -228,24 +259,24 @@
                     </div>
 
                     <!-- Right Column: Tech Stack badges & visual image -->
-                    <div class="skills-visual-col">
-                        <div class="skills-badge-card glass-card">
+                    <div class="skills-visual-col" data-reveal="fade-left">
+                        <div class="skills-badge-card glass-card" data-tilt>
                             <h3 class="skills-card-heading"><i class="fa-solid fa-layer-group text-orange"></i> Tech Stack Overview</h3>
                             <p class="skills-card-desc">Comprehensive suite of tools and frameworks leveraged for building high-performance, responsive web applications.</p>
                             
                             <div class="tech-stack-tags">
-                                <span class="tech-tag"><i class="fa-brands fa-react text-cyan"></i> React</span>
-                                <span class="tech-tag"><i class="fa-brands fa-node-js text-orange"></i> Node.js</span>
-                                <span class="tech-tag"><i class="fa-solid fa-server text-cyan"></i> Express</span>
-                                <span class="tech-tag"><i class="fa-solid fa-database text-orange"></i> MongoDB</span>
-                                <span class="tech-tag"><i class="fa-brands fa-js text-cyan"></i> JavaScript</span>
-                                <span class="tech-tag"><i class="fa-brands fa-html5 text-orange"></i> HTML5</span>
-                                <span class="tech-tag"><i class="fa-brands fa-css3-alt text-cyan"></i> CSS3</span>
-                                <span class="tech-tag"><i class="fa-solid fa-wind text-orange"></i> Tailwind</span>
-                                <span class="tech-tag"><i class="fa-solid fa-code text-cyan"></i> C++</span>
-                                <span class="tech-tag"><i class="fa-brands fa-git-alt text-orange"></i> Git</span>
-                                <span class="tech-tag"><i class="fa-brands fa-github text-cyan"></i> GitHub</span>
-                                <span class="tech-tag"><i class="fa-solid fa-bolt text-orange"></i> REST APIs</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-brands fa-react text-cyan"></i> React</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-brands fa-node-js text-orange"></i> Node.js</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-solid fa-server text-cyan"></i> Express</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-solid fa-database text-orange"></i> MongoDB</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-brands fa-js text-cyan"></i> JavaScript</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-brands fa-html5 text-orange"></i> HTML5</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-brands fa-css3-alt text-cyan"></i> CSS3</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-solid fa-wind text-orange"></i> Tailwind</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-solid fa-code text-cyan"></i> C++</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-brands fa-git-alt text-orange"></i> Git</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-brands fa-github text-cyan"></i> GitHub</span>
+                                <span class="tech-tag" data-magnetic><i class="fa-solid fa-bolt text-orange"></i> REST APIs</span>
                             </div>
                         </div>
                     </div>
@@ -260,12 +291,12 @@
                 <span class="showreel-bg-title">VISUAL HIGHLIGHTS</span>
             </div>
             <div class="container">
-                <div class="section-header text-center">
+                <div class="section-header text-center" data-reveal="fade-down">
                     <h2 class="section-title"><span class="text-sand">Showcase</span> <span
                             class="text-black">Project</span></h2>
                 </div>
 
-                <div class="showreel-wrapper glass-card">
+                <div class="showreel-wrapper glass-card" data-reveal="zoom-in" data-tilt>
                     <div class="showreel-slideshow-container" id="showcase-slideshow">
                         <div class="slideshow-track" id="slideshow-track">
                             <div class="slide active">
@@ -275,7 +306,7 @@
                                         <h3>ElectricHelp</h3>
                                         <p>Hospital Maintenance &amp; Complaint Management Portal</p>
                                     </div>
-                                    <a href="http://electrichelp.vercel.app/" target="_blank" class="slide-live-btn" aria-label="Visit ElectricHelp Live Demo">
+                                    <a href="http://electrichelp.vercel.app/" target="_blank" class="slide-live-btn" aria-label="Visit ElectricHelp Live Demo" data-magnetic>
                                         <span>Live Demo</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                     </a>
                                 </div>
@@ -287,7 +318,7 @@
                                         <h3>FundHappiness</h3>
                                         <p>Empower Communities &amp; Fund NGO Initiatives</p>
                                     </div>
-                                    <a href="https://fund-happiness.vercel.app/#" target="_blank" class="slide-live-btn" aria-label="Visit FundHappiness Live Demo">
+                                    <a href="https://fund-happiness.vercel.app/#" target="_blank" class="slide-live-btn" aria-label="Visit FundHappiness Live Demo" data-magnetic>
                                         <span>Live Demo</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                     </a>
                                 </div>
@@ -313,10 +344,10 @@
                         </div>
 
                         <!-- Navigation Arrows -->
-                        <button class="slideshow-nav nav-prev" id="slideshow-prev" aria-label="Previous Slide">
+                        <button class="slideshow-nav nav-prev" id="slideshow-prev" aria-label="Previous Slide" data-magnetic>
                             <i class="fa-solid fa-chevron-left"></i>
                         </button>
-                        <button class="slideshow-nav nav-next" id="slideshow-next" aria-label="Next Slide">
+                        <button class="slideshow-nav nav-next" id="slideshow-next" aria-label="Next Slide" data-magnetic>
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
 
@@ -338,7 +369,7 @@
                 <span class="work-bg-title">MY WORK</span>
             </div>
             <div class="container">
-                <div class="section-header text-center">
+                <div class="section-header text-center" data-reveal="fade-down">
                     <h2 class="section-title"><span class="text-sand">Featured</span> <span
                             class="text-black">Projects</span></h2>
                 </div>
@@ -350,7 +381,7 @@
             <div class="container long-videos-container">
                 <div class="long-videos-grid">
                     <!-- Project 1: ElectricHelp -->
-                    <div class="long-video-card glass-card">
+                    <div class="long-video-card glass-card" data-reveal="fade-up" data-delay="100" data-tilt>
                         <div class="long-video-embed-wrapper">
                             <img src="./assets/showcase-electrichelp.png" alt="ElectricHelp Hospital Maintenance Portal" class="featured-project-img" loading="lazy">
                         </div>
@@ -365,7 +396,7 @@
                                     <span class="tool-pill">Express</span>
                                     <span class="tool-pill">MongoDB</span>
                                 </div>
-                                <a href="http://electrichelp.vercel.app/" target="_blank" class="project-live-btn">
+                                <a href="http://electrichelp.vercel.app/" target="_blank" class="project-live-btn" data-magnetic>
                                     <span>Live Demo</span>
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                 </a>
@@ -374,7 +405,7 @@
                     </div>
 
                     <!-- Project 2: FundHappiness -->
-                    <div class="long-video-card glass-card">
+                    <div class="long-video-card glass-card" data-reveal="fade-up" data-delay="200" data-tilt>
                         <div class="long-video-embed-wrapper">
                             <img src="./assets/showcase-fundhappiness.png" alt="FundHappiness Crowdfunding Platform" class="featured-project-img" loading="lazy">
                         </div>
@@ -389,7 +420,7 @@
                                     <span class="tool-pill">Node.js</span>
                                     <span class="tool-pill">REST API</span>
                                 </div>
-                                <a href="https://fund-happiness.vercel.app/#" target="_blank" class="project-live-btn">
+                                <a href="https://fund-happiness.vercel.app/#" target="_blank" class="project-live-btn" data-magnetic>
                                     <span>Live Demo</span>
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                 </a>
@@ -398,7 +429,7 @@
                     </div>
 
                     <!-- Project 3: ImagineX -->
-                    <div class="long-video-card glass-card">
+                    <div class="long-video-card glass-card" data-reveal="fade-up" data-delay="300" data-tilt>
                         <div class="long-video-embed-wrapper">
                             <img src="./assets/showcase-imaginex.png" alt="ImagineX API Text to Image Generator" class="featured-project-img" loading="lazy">
                         </div>
@@ -417,7 +448,7 @@
                     </div>
 
                     <!-- Project 4: Prateek Yadav Portfolio -->
-                    <div class="long-video-card glass-card">
+                    <div class="long-video-card glass-card" data-reveal="fade-up" data-delay="400" data-tilt>
                         <div class="long-video-embed-wrapper">
                             <img src="./assets/showcase-hero.png" alt="Prateek Yadav Portfolio Experience" class="featured-project-img" loading="lazy">
                         </div>
@@ -450,13 +481,13 @@
         <!-- Contact Section -->
         <section class="section contact-section" id="contact">
             <div class="container">
-                <div class="section-header text-center">
+                <div class="section-header text-center" data-reveal="fade-down">
                     <h2 class="section-title"><span class="text-sand">Get In</span> <span
                             class="text-black">Touch</span></h2>
                 </div>
 
                 <div class="contact-grid">
-                    <div class="contact-info glass-card">
+                    <div class="contact-info glass-card" data-reveal="fade-right" data-tilt>
                         <h3>Contact Information</h3>
                         <p>Feel free to reach out through the contact form or directly via email or social channels.</p>
 
@@ -477,7 +508,7 @@
                                     <i class="fa-solid fa-location-dot"></i>
                                 </div>
                                 <div class="info-content">
-                                    <span class="info-value"> <a href="https://www.google.com/maps/place/Prateek+Yadav's+%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A4%A4%E0%A5%80%E0%A4%95+%E0%A4%AF%E0%A4%BE%E0%A4%A6%E0%A4%B5'%E0%A4%B8/@24.559609,80.8168596,237m/data=!3m1!1e3!4m18!1m12!4m11!1m3!2m2!1d80.8176852!2d24.5595852!1m6!1m2!1s0x39847f0414053ceb:0x3e97557c7fc71500!2sPrateek+Yadav's,+HR58%2BWXP,+Gali+Number+7,+Dhawari,+Satna,+Madhya+Pradesh+485001!2m2!1d80.8174218!2d24.5597994!3m4!1s0x39847f0414053ceb:0x3e97557c7fc71500!8m2!3d24.5597997!4d80.8174253?entry=ttu&g_ep=EgoyMDI2MDgwMy4wIKXMDSoASAFQAw%3D%3D"Location</span>
+                                    <span class="info-value"> <a target="_blank" href="https://www.google.com/maps/place/Prateek+Yadav's+%E0%A4%AA%E0%A5%8D%E0%A4%B0%E0%A4%A4%E0%A5%80%E0%A4%95+%E0%A4%AF%E0%A4%BE%E0%A4%A6%E0%A4%BB'%E0%A4%B8/@24.559609,80.8168596,237m/data=!3m1!1e3!4m18!1m12!4m11!1m3!2m2!1d80.8176852!2d24.5595852!1m6!1m2!1s0x39847f0414053ceb:0x3e97557c7fc71500!2sPrateek+Yadav's,+HR58%2BWXP,+Gali+Number+7,+Dhawari,+Satna,+Madhya+Pradesh+485001!2m2!1d80.8174218!2d24.5597994!3m4!1s0x39847f0414053ceb:0x3e97557c7fc71500!8m2!3d24.5597997!4d80.8174253?entry=ttu&g_ep=EgoyMDI2MDgwMy4wIKXMDSoASAFQAw%3D%3D"Location</span>
                                     <span class="info-value">Available Worldwide / Remote</a></span>
                                 </div>
                             </div>
@@ -494,20 +525,20 @@
                         </div>
 
                         <div class="social-links">
-                            <a href="http://www.linkedin.com/in/prateek-yadav-03792a287" target="_blank" rel="noopener noreferrer" class="social-btn"
+                            <a href="http://www.linkedin.com/in/prateek-yadav-03792a287" target="_blank" rel="noopener noreferrer" class="social-btn" data-magnetic
                                 aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-                            <a href="https://www.facebook.com/profile.php?id=100016126751096" target="_blank" rel="noopener noreferrer" class="social-btn"
+                            <a href="https://www.facebook.com/profile.php?id=100016126751096" target="_blank" rel="noopener noreferrer" class="social-btn" data-magnetic
                                 aria-label="facebook"><i class="fa-brands fa-facebook"></i></a>
-                            <a href="https://www.instagram.com/himanxhu.exp?igsh=MTczaDYxaDd1NHJ3Mw%3D%3D&utm_source=qr"
+                            <a href="https://www.instagram.com/prateekyadav._.21/" data-magnetic
                                 target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="Instagram"><i
                                     class="fa-brands fa-instagram"></i></a>
-                                     <a href="https://github.com/Prateekyadav17"
+                                     <a href="https://github.com/Prateekyadav17" data-magnetic
                                 target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="github"><i
                                     class="fa-brands fa-github"></i></a>
                         </div>
                     </div>
 
-                    <form class="contact-form glass-card" id="contact-form">
+                    <form class="contact-form glass-card" id="contact-form" data-reveal="fade-left" data-tilt>
                         <div class="form-group">
                             <label for="name">Your Name</label>
                             <input type="text" id="name" required placeholder="John Doe">
@@ -525,7 +556,7 @@
                             <textarea id="message" rows="5" required
                                 placeholder="Tell me about your project..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary submit-btn">
+                        <button type="submit" class="btn btn-primary submit-btn" data-magnetic>
                             <span>Send Message</span>
                             <i class="fa-solid fa-paper-plane"></i>
                         </button>
@@ -546,7 +577,7 @@
     </footer>
 
     <!-- Back to top floating button -->
-    <button class="back-to-top" id="back-to-top" aria-label="Back to Top">
+    <button class="back-to-top" id="back-to-top" aria-label="Back to Top" data-magnetic>
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 

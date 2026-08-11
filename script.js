@@ -2,6 +2,67 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     
+    // ==========================================================================
+    // 0. CINEMATIC PRELOADER & HERO REVEAL CONTROLLER
+    // ==========================================================================
+    const preloader = document.getElementById('cinematic-loader');
+    const loaderPercent = document.getElementById('loader-percent');
+    const loaderStatus = document.getElementById('loader-status');
+    const loaderFill = document.getElementById('loader-line-fill');
+    const loaderProgressCircle = document.getElementById('loader-progress-circle');
+
+    if (preloader && loaderPercent && loaderFill && loaderProgressCircle) {
+        let progress = 0;
+        const totalLength = 276.46;
+
+        const statuses = [
+            { threshold: 0, text: "INITIALIZING CORE SYSTEM..." },
+            { threshold: 30, text: "LOADING HIGH-TECH ASSETS..." },
+            { threshold: 65, text: "BUILDING DIGITAL EMOTION..." },
+            { threshold: 90, text: "WELCOME TO THE EXPERIENCE" }
+        ];
+
+        const updateProgress = () => {
+            progress += Math.floor(Math.random() * 6) + 3;
+            if (progress > 100) progress = 100;
+
+            loaderPercent.textContent = `${progress}%`;
+            loaderFill.style.width = `${progress}%`;
+            
+            const offset = totalLength - (progress / 100) * totalLength;
+            loaderProgressCircle.style.strokeDashoffset = offset;
+
+            for (let i = statuses.length - 1; i >= 0; i--) {
+                if (progress >= statuses[i].threshold) {
+                    if (loaderStatus.textContent !== statuses[i].text) {
+                        loaderStatus.textContent = statuses[i].text;
+                    }
+                    break;
+                }
+            }
+
+            if (progress < 100) {
+                setTimeout(updateProgress, 25);
+            } else {
+                setTimeout(() => {
+                    preloader.classList.add('is-loaded');
+                    document.body.classList.remove('is-loading');
+
+                    setTimeout(() => {
+                        const heroReveals = document.querySelectorAll('#hero [data-reveal]');
+                        heroReveals.forEach(el => el.classList.add('is-revealed'));
+                    }, 450);
+
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 1100);
+                }, 400);
+            }
+        };
+
+        setTimeout(updateProgress, 100);
+    }
+
     // Elements
     const navbar = document.getElementById('navbar');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -453,4 +514,329 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // ==========================================================================
+    // 1. INTERACTIVE AMBIENT PARTICLE CONSTELLATION ENGINE
+    // ==========================================================================
+    const canvas = document.getElementById('ambient-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+        
+        let mouseX = width / 2;
+        let mouseY = height / 2;
+        let mouseActive = false;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            mouseActive = true;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouseActive = false;
+        });
+
+        // Mobile Touch Events for Particle Constellation
+        window.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 0) {
+                mouseX = e.touches[0].clientX;
+                mouseY = e.touches[0].clientY;
+                mouseActive = true;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                mouseX = e.touches[0].clientX;
+                mouseY = e.touches[0].clientY;
+                mouseActive = true;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => {
+            mouseActive = false;
+        });
+
+        const particleCount = Math.min(Math.floor(window.innerWidth / 18), 65);
+        const particles = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.7;
+                this.vy = (Math.random() - 0.5) * 0.7;
+                this.radius = Math.random() * 1.8 + 1;
+                this.color = Math.random() > 0.4 ? 'rgba(255, 101, 126, ' : 'rgba(255, 42, 75, ';
+                this.alpha = Math.random() * 0.6 + 0.2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color + this.alpha + ')';
+                ctx.shadowColor = '#ff2a4b';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        const renderCanvas = () => {
+            ctx.clearRect(0, 0, width, height);
+
+            // Connect nearby particles
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(255, 101, 126, ${0.25 * (1 - dist / 110)})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+
+                // Connect to mouse or touch pointer
+                if (mouseActive) {
+                    const dx = particles[i].x - mouseX;
+                    const dy = particles[i].y - mouseY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 140) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(mouseX, mouseY);
+                        ctx.strokeStyle = `rgba(255, 42, 75, ${0.45 * (1 - dist / 140)})`;
+                        ctx.lineWidth = 0.9;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(renderCanvas);
+        };
+
+        renderCanvas();
+    }
+
+    // ==========================================================================
+    // 2. CUSTOM NEON FOLLOWER CURSOR ENGINE
+    // ==========================================================================
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+
+    if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
+        let mouseX = -100, mouseY = -100;
+        let ringX = -100, ringY = -100;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+        });
+
+        const updateCursorRing = () => {
+            ringX += (mouseX - ringX) * 0.18;
+            ringY += (mouseY - ringY) * 0.18;
+
+            cursorRing.style.left = `${ringX}px`;
+            cursorRing.style.top = `${ringY}px`;
+
+            requestAnimationFrame(updateCursorRing);
+        };
+        updateCursorRing();
+
+        // Hover expansions
+        const hoverTargets = document.querySelectorAll('a, button, input, textarea, .glass-card, [data-magnetic]');
+        hoverTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => cursorRing.classList.add('cursor-hover'));
+            target.addEventListener('mouseleave', () => cursorRing.classList.remove('cursor-hover'));
+        });
+
+        window.addEventListener('mousedown', () => cursorRing.classList.add('cursor-active'));
+        window.addEventListener('mouseup', () => cursorRing.classList.remove('cursor-active'));
+    }
+
+    // ==========================================================================
+    // 3. TYPEWRITER HEADLINE ROTATOR ENGINE
+    // ==========================================================================
+    const typewriterElement = document.querySelector('.typewriter-target');
+    if (typewriterElement && typewriterElement.hasAttribute('data-typewriter')) {
+        try {
+            const phrases = JSON.parse(typewriterElement.getAttribute('data-typewriter'));
+            let phraseIndex = 0;
+            let charIndex = phrases[0].length;
+            let isDeleting = false;
+
+            const type = () => {
+                const currentPhrase = phrases[phraseIndex];
+
+                if (isDeleting) {
+                    charIndex--;
+                    typewriterElement.textContent = currentPhrase.substring(0, charIndex);
+                } else {
+                    charIndex++;
+                    typewriterElement.textContent = currentPhrase.substring(0, charIndex);
+                }
+
+                let typeSpeed = isDeleting ? 40 : 80;
+
+                if (!isDeleting && charIndex === currentPhrase.length) {
+                    typeSpeed = 2200; // Pause at full phrase
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    typeSpeed = 400; // Pause before typing next
+                }
+
+                setTimeout(type, typeSpeed);
+            };
+
+            setTimeout(type, 1500);
+        } catch (err) {
+            console.error('Typewriter JSON parse error:', err);
+        }
+    }
+
+    // ==========================================================================
+    // 4. 3D CARD TILT & SPECULAR GLARE CONTROLLER (Desktop & Mobile Touch)
+    // ==========================================================================
+    const tiltElements = document.querySelectorAll('[data-tilt]');
+    tiltElements.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            card.style.setProperty('--glare-x', `${(x / rect.width) * 100}%`);
+            card.style.setProperty('--glare-y', `${(y / rect.height) * 100}%`);
+            card.style.setProperty('--glare-opacity', '1');
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            card.style.setProperty('--glare-opacity', '0');
+        });
+
+        // Mobile touch pulse effect
+        card.addEventListener('touchstart', () => {
+            card.style.transform = 'perspective(1000px) rotateX(-2deg) scale3d(0.98, 0.98, 0.98)';
+            card.style.setProperty('--glare-opacity', '0.6');
+        }, { passive: true });
+
+        card.addEventListener('touchend', () => {
+            setTimeout(() => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) scale3d(1, 1, 1)';
+                card.style.setProperty('--glare-opacity', '0');
+            }, 250);
+        });
+    });
+
+    // ==========================================================================
+    // 5. MAGNETIC BUTTON HOVER PULL CONTROLLER
+    // ==========================================================================
+    const magneticElements = document.querySelectorAll('[data-magnetic]');
+    magneticElements.forEach(elem => {
+        elem.addEventListener('mousemove', (e) => {
+            const rect = elem.getBoundingClientRect();
+            const x = e.clientX - (rect.left + rect.width / 2);
+            const y = e.clientY - (rect.top + rect.height / 2);
+
+            elem.style.transform = `translate(${x * 0.28}px, ${y * 0.28}px)`;
+        });
+
+        elem.addEventListener('mouseleave', () => {
+            elem.style.transform = 'translate(0px, 0px)';
+        });
+    });
+
+    // ==========================================================================
+    // 6. SCROLL REVEAL INTERSECTION OBSERVER ENGINE (OPTIMIZED FOR MOBILE)
+    // ==========================================================================
+    const revealElements = document.querySelectorAll('[data-reveal]');
+    
+    const checkAndRevealInViewport = () => {
+        const windowHeight = window.innerHeight;
+        revealElements.forEach(elem => {
+            const rect = elem.getBoundingClientRect();
+            // Reveal if element top is within expanded viewport height
+            if (rect.top <= windowHeight + 80 && rect.bottom >= -80) {
+                const delay = elem.getAttribute('data-delay') || 0;
+                setTimeout(() => {
+                    elem.classList.add('is-revealed');
+                }, parseInt(delay));
+            }
+        });
+    };
+
+    if (revealElements.length > 0) {
+        if ('IntersectionObserver' in window) {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.getAttribute('data-delay') || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('is-revealed');
+                        }, parseInt(delay));
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.01,
+                rootMargin: '100px 0px 80px 0px'
+            });
+
+            revealElements.forEach(elem => revealObserver.observe(elem));
+        }
+
+        // Additional scroll & load fallback listeners for mobile screen responsiveness
+        window.addEventListener('scroll', checkAndRevealInViewport, { passive: true });
+        window.addEventListener('load', checkAndRevealInViewport);
+        
+        // Initial immediate check
+        checkAndRevealInViewport();
+        
+        // Mobile safety trigger: reveal all elements after 2.5s to prevent any hidden content
+        setTimeout(() => {
+            revealElements.forEach(elem => elem.classList.add('is-revealed'));
+        }, 2500);
+    }
 });
+
+
