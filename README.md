@@ -27,8 +27,8 @@ Prateek Portfolio/
 │   ├── showcase-fundhappiness.png           # FundHappiness Project Preview
 │   ├── showcase-imaginex.png                # ImagineX Project Preview
 │   ├── showcase-hero.png                    # Portfolio Hero Preview
-│   ├── himanshu-landing-page.png            # Hero background banner
-│   └── himanshu-front.png                   # About Me portrait image
+│   ├── landing-page.png                     # Hero background banner
+│   └── front.png                            # About Me portrait image
 ├── index.html                               # Main Portfolio Homepage
 ├── styles.css                               # Main CSS Stylesheet & Design System
 ├── script.js                                # Interactive JavaScript Logic & Mobile Sliders
