@@ -412,23 +412,36 @@ h4 {
 .btn-apple-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     padding: 7px 18px;
     border-radius: 980px;
-    background: linear-gradient(135deg, #d2eeff 0%, #6bb8f6 100%);
-    color: #000000;
-    font-size: 0.8rem;
-    font-weight: 600;
+    background: linear-gradient(135deg, #72c7ff 0%, #2997ff 100%);
+    color: #050814 !important;
+    font-size: 0.82rem;
+    font-weight: 700 !important;
     text-decoration: none;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
     transition: all 0.3s var(--transition-apple);
-    box-shadow: 0 2px 16px rgba(107, 184, 246, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 18px rgba(41, 151, 255, 0.45);
+}
+
+.btn-apple-pill span,
+.btn-apple-pill i {
+    color: #050814 !important;
+    font-weight: 700 !important;
 }
 
 .btn-apple-pill:hover {
-    background: linear-gradient(135deg, #e5f4ff 0%, #7ec6f8 100%);
+    background: linear-gradient(135deg, #8ad3ff 0%, #47a3ff 100%);
     transform: scale(1.04);
-    box-shadow: 0 6px 24px rgba(107, 184, 246, 0.7);
-    color: #000000;
+    box-shadow: 0 6px 24px rgba(41, 151, 255, 0.65);
+    color: #050814 !important;
+}
+
+.btn-apple-pill:hover span,
+.btn-apple-pill:hover i {
+    color: #050814 !important;
 }
 
 .btn-apple-outline {
