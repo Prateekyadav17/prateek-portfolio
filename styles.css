@@ -1683,11 +1683,11 @@ h4 {
     }
 
     .hero-text-group {
-        position: absolute !important;
-        top: 46% !important;
+               position: absolute !important;
+        top: 54% !important;
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
-        width: 100% !important;
+        width: 104% !important;
         padding: 0 12px !important;
         z-index: 3 !important;
     }
@@ -1739,7 +1739,7 @@ h4 {
     /* 3D MacBook 60fps Scroll Open View on Mobile */
     .macbook-viewport-container {
         perspective: 900px !important;
-        width: 94% !important;
+        width: 90% !important;
         position: absolute !important;
         top: 50% !important;
         left: 50% !important;
@@ -1749,10 +1749,13 @@ h4 {
     }
 
     .macbook-lid {
-        width: 92%;
-        margin: 0 auto;
-        transform-origin: bottom center;
+               width: 98%;
+        margin: 0px auto;
+        transform-origin: bottom;
+        margin-top: 88%;
+        left: 0%;
     }
+
 
     .hero-stats-ribbon {
         flex-direction: column;
@@ -1811,7 +1814,13 @@ h4 {
     .project-info-body {
         padding: 24px 18px;
     }
-
+.macbook-3d-wrapper {
+    position: relative;
+    z-index: 1;
+    transform-style: preserve-3d;
+    width: 147%;
+    margin: 0 auto;
+}
     /* Projects Slider Mobile Fix - 1 Full Width Card Per Slide View */
     .projects-track {
         gap: 16px;
@@ -1875,7 +1884,7 @@ h4 {
         gap: 12px;
         text-align: center;
     }
-}
+
 
 @media (max-width: 480px) {
     .navbar {

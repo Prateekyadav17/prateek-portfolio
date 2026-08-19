@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalLength = 276.46;
 
         const statuses = [
-            { threshold: 0, text: "INITIALIZING APPLE HARDWARE ENGINE..." },
+            { threshold: 0, text: "INITIALIZING HARDWARE ENGINE..." },
             { threshold: 35, text: "LOADING HIGH-RESOLUTION MESH..." },
-            { threshold: 70, text: "CALIBRATING RETINA DISPLAY..." },
+            { threshold: 70, text: "CALIBRATING  DISPLAY..." },
             { threshold: 90, text: "WELCOME TO THE EXPERIENCE" }
         ];
 
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalScrollable <= 0) return;
 
         const scrolled = -heroRect.top;
-        let progress = scrolled / (totalScrollable * 0.75);
+        let progress = scrolled / (totalScrollable * 0.85);
         if (progress < 0) progress = 0;
         if (progress > 1) progress = 1;
 
