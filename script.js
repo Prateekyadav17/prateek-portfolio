@@ -157,29 +157,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const heroSection = document.getElementById('hero');
     const macbookLid = document.getElementById('macbook-lid');
     const macbookGlow = document.getElementById('macbook-glow');
+    const heroTextGroup = document.getElementById('hero-text-group');
+    const macbookContainer = document.querySelector('.macbook-viewport-container');
 
     function updateMacBookLid() {
         if (!heroSection || !macbookLid) return;
 
         const heroRect = heroSection.getBoundingClientRect();
-        const heroHeight = heroSection.offsetHeight;
-        const scrolled = -heroRect.top;
+        const totalScrollable = heroSection.offsetHeight - window.innerHeight;
+        if (totalScrollable <= 0) return;
 
-        // Progress from 0 to 1 as user scrolls through Hero
-        let progress = scrolled / (heroHeight * 0.45);
+        const scrolled = -heroRect.top;
+        let progress = scrolled / (totalScrollable * 0.75);
         if (progress < 0) progress = 0;
         if (progress > 1) progress = 1;
 
-        // Calculate lid angle: -85deg (closed) down to 0deg (fully open facing viewer)
-        const angle = -85 + (progress * 85);
-        const scale = 1 - (progress * 0.1);
-        const translateY = progress * 15;
-        
-        macbookLid.style.transform = `rotateX(${angle}deg) translateY(${translateY}px) scale(${scale})`;
+        // Lid angle: -88deg (closed) -> 0deg (100% fully open facing viewer in exact middle of screen)
+        const angle = -88 + (progress * 88);
+        macbookLid.style.transform = `rotateX(${angle}deg)`;
 
-        // Adjust ambient glow opacity based on lid opening
+        // Fade hero text group as user scrolls to middle
+        if (heroTextGroup) {
+            const textOpacity = Math.max(0, 1 - (progress * 2.5));
+            const textTranslateY = -progress * 60;
+            heroTextGroup.style.opacity = textOpacity;
+            heroTextGroup.style.transform = `translate(-50%, calc(-50% + ${textTranslateY}px))`;
+        }
+
         if (macbookGlow) {
-            macbookGlow.style.opacity = 0.2 + (progress * 0.7);
+            macbookGlow.style.opacity = 0.2 + (progress * 0.8);
         }
     }
 
@@ -298,35 +304,148 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================================================
-    // 7. SHOWCASE SLIDESHOW CONTROLLER
+    // 7. FEATURED PROJECTS SLIDER CONTROLLER (TRANSFORM TRACK SLIDER)
     // ==========================================================================
-    const track = document.getElementById('slideshow-track');
-    const prevBtn = document.getElementById('slideshow-prev');
-    const nextBtn = document.getElementById('slideshow-next');
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slideshow-track .slide');
+    const projectsTrack = document.getElementById('projects-track');
+    const projectsPrevBtn = document.getElementById('projects-prev');
+    const projectsNextBtn = document.getElementById('projects-next');
+    const projectsDots = document.querySelectorAll('.projects-dot');
+    let currentProjectIndex = 0;
 
-    function updateSlideshow() {
-        if (!track || slides.length === 0) return;
-        track.style.transform = `translateX(-${currentSlide * 100}%)`;
-    }
+    if (projectsTrack) {
+        const cards = projectsTrack.querySelectorAll('.project-apple-card');
+        const totalProjects = cards.length;
 
-    if (prevBtn && nextBtn && slides.length > 0) {
-        nextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateSlideshow();
+        function getMaxIndex() {
+            const isMobile = window.innerWidth <= 768;
+            return isMobile ? totalProjects - 1 : Math.max(0, totalProjects - 2);
+        }
+
+        function updateProjectsSlider() {
+            const maxIdx = getMaxIndex();
+            if (currentProjectIndex < 0) currentProjectIndex = 0;
+            if (currentProjectIndex > maxIdx) currentProjectIndex = maxIdx;
+
+            const card = cards[0];
+            if (!card) return;
+
+            const gap = parseInt(window.getComputedStyle(projectsTrack).gap) || 24;
+            const moveAmount = (card.offsetWidth + gap) * currentProjectIndex;
+
+            projectsTrack.style.transform = `translateX(-${moveAmount}px)`;
+
+            projectsDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentProjectIndex);
+            });
+        }
+
+        if (projectsNextBtn) {
+            projectsNextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const maxIdx = getMaxIndex();
+                if (currentProjectIndex < maxIdx) {
+                    currentProjectIndex++;
+                } else {
+                    currentProjectIndex = 0;
+                }
+                updateProjectsSlider();
+            });
+        }
+
+        if (projectsPrevBtn) {
+            projectsPrevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const maxIdx = getMaxIndex();
+                if (currentProjectIndex > 0) {
+                    currentProjectIndex--;
+                } else {
+                    currentProjectIndex = maxIdx;
+                }
+                updateProjectsSlider();
+            });
+        }
+
+        projectsDots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                currentProjectIndex = idx;
+                updateProjectsSlider();
+            });
         });
 
-        prevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            updateSlideshow();
-        });
+        // Touch Swipe Gesture Handler
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-        // Auto slide every 5 seconds
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateSlideshow();
-        }, 5000);
+        projectsTrack.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            stopAutoSlideLoop();
+        }, { passive: true });
+
+        projectsTrack.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            const diffX = touchStartX - touchEndX;
+
+            if (Math.abs(diffX) > 40) {
+                const maxIdx = getMaxIndex();
+                if (diffX > 0 && currentProjectIndex < maxIdx) {
+                    currentProjectIndex++;
+                } else if (diffX < 0 && currentProjectIndex > 0) {
+                    currentProjectIndex--;
+                }
+                updateProjectsSlider();
+            }
+        }, { passive: true });
+
+        // Auto-Slide Peek & Auto-Play on Scroll into Viewport
+        let hasAutoSlidPeek = false;
+        let autoSlideTimer = null;
+
+        function startAutoSlideLoop() {
+            if (autoSlideTimer) clearInterval(autoSlideTimer);
+            autoSlideTimer = setInterval(() => {
+                const maxIdx = getMaxIndex();
+                currentProjectIndex = (currentProjectIndex + 1) > maxIdx ? 0 : currentProjectIndex + 1;
+                updateProjectsSlider();
+            }, 4500);
+        }
+
+        function stopAutoSlideLoop() {
+            if (autoSlideTimer) {
+                clearInterval(autoSlideTimer);
+                autoSlideTimer = null;
+            }
+        }
+
+        const sliderWrapper = document.querySelector('.projects-slider-wrapper') || projectsTrack;
+        const sliderObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!hasAutoSlidPeek) {
+                        hasAutoSlidPeek = true;
+                        // Perform an initial peek slide 600ms after entering view to signal it's a slide
+                        setTimeout(() => {
+                            if (currentProjectIndex === 0) {
+                                currentProjectIndex = 1;
+                                updateProjectsSlider();
+                            }
+                        }, 600);
+                    }
+                    startAutoSlideLoop();
+                } else {
+                    stopAutoSlideLoop();
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sliderObserver.observe(sliderWrapper);
+
+        // Pause auto-slide on manual button interaction
+        if (projectsNextBtn) projectsNextBtn.addEventListener('click', stopAutoSlideLoop);
+        if (projectsPrevBtn) projectsPrevBtn.addEventListener('click', stopAutoSlideLoop);
+        projectsDots.forEach(dot => dot.addEventListener('click', stopAutoSlideLoop));
+
+        window.addEventListener('resize', updateProjectsSlider);
+        updateProjectsSlider();
     }
 
     // ==========================================================================
