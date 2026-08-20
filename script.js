@@ -483,4 +483,69 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ==========================================================================
+    // 9. LIVE VISITOR COUNT & COUNTER ANIMATION
+    // ==========================================================================
+    const visitCountEl = document.getElementById('visit-count-number');
+    if (visitCountEl) {
+        function animateVisitorCounter(targetCount) {
+            const countVal = parseInt(targetCount, 10);
+            if (isNaN(countVal)) return;
+
+            const duration = 1400;
+            const startTime = performance.now();
+
+            function step(timestamp) {
+                const elapsed = timestamp - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const current = Math.floor(countVal * (1 - Math.pow(1 - progress, 3)));
+                visitCountEl.textContent = current.toLocaleString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    visitCountEl.textContent = countVal.toLocaleString();
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        async function fetchLiveVisitCount() {
+            const STORAGE_KEY = 'py_portfolio_real_visits';
+            let stored = localStorage.getItem(STORAGE_KEY);
+            let localCount = parseInt(stored || '0', 10);
+
+            if (isNaN(localCount) || localCount < 0) {
+                localCount = 0;
+            }
+
+            // Increment real visit count starting from 1
+            localCount += 1;
+            localStorage.setItem(STORAGE_KEY, localCount);
+
+            // Attempt to hit live counter API starting from zero
+            try {
+                const response = await fetch('https://api.counterapi.dev/v1/prateekyadav_portfolio_real/visits/up');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && typeof data.count === 'number' && !isNaN(data.count)) {
+                        const realCount = data.count;
+                        localStorage.setItem(STORAGE_KEY, realCount);
+                        animateVisitorCounter(realCount);
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.log('Visitor counter API note:', err.message);
+            }
+
+            // Fallback to real local visit count starting from 1
+            animateVisitorCounter(localCount);
+        }
+
+        fetchLiveVisitCount();
+    }
+
 });
+
