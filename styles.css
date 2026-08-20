@@ -370,12 +370,10 @@ h4 {
 .profile-visits-container {
     position: absolute;
     top: 72px;
-    left: 50%;
+    left: 42%;
     transform: translateX(-50%);
     z-index: 90;
     pointer-events: none;
-    display: flex;
-    justify-content: flex-start;
 }
 
 .profile-visits-badge {
@@ -1800,12 +1798,12 @@ h4 {
     .profile-visits-container {
         position: relative;
         top: 0;
-        left: 0;
+        left: -30%;
         transform: none;
         margin: 10px auto 14px auto;
         display: flex;
         justify-content: center;
-        width: 100%;
+        width: 60%;
         z-index: 10;
     }
 
